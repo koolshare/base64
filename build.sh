@@ -1,9 +1,9 @@
 #!/bin/sh
 
-CC=arm-brcm-linux-uclibcgnueabi-gcc
-STRIP=arm-brcm-linux-uclibcgnueabi-strip
-#CC=gcc
-#STRIP=strip
+#CC=arm-brcm-linux-uclibcgnueabi-gcc
+#STRIP=arm-brcm-linux-uclibcgnueabi-strip
+CC=gcc
+STRIP=strip
 
 rm -f base64_encode
 $CC -Os -std=gnu99 base64_encode.c -o base64_encode
