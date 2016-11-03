@@ -33,17 +33,23 @@ int main(int argc, char *argv[]) {
     }
 
     if(NULL != strstr(argv[0], "dec")) {
-        buf[len] = '\0';
-        value = base64_decode(buf, (size_t)len, &olen);
-    } else {
         len = (len/4)*4;
         buf[len] = '\0';
+        value = base64_decode(buf, (size_t)len, &olen);
+        if(NULL == value) {
+            return -1;
+        }
+        value[olen] = '\0';
+    } else {
+        buf[len] = '\0';
         value = base64_encode(buf, (size_t)len, &olen);
+        if(NULL == value) {
+            return -1;
+        }
+        value[olen] = '\n';
+        value[olen+1] = '\0';
+        ++olen;
     }
-    if(NULL == value) {
-        return -1;
-    }
-    value[olen] = '\0';
 
     fwrite(value, 1, olen, stdout);
     fflush(stdout);
