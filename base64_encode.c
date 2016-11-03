@@ -10,12 +10,15 @@
 char *base64_encode(const unsigned char *data,
                     size_t input_length,
                     size_t *output_length);
+unsigned char *base64_decode(const char *data,
+                             size_t input_length,
+                             size_t *output_length);
 
 void  aLARMhandler(int sig) {
     exit(1);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     char *value, buf[409600];
     int len;
     size_t olen = 0;
@@ -29,10 +32,12 @@ int main() {
         return -1;
     }
 
-    len = (len/4) * 4;
     buf[len] = '\0';
-
-    value = base64_encode(buf, (size_t)len, &olen);
+    if(NULL != strstr(argv[0], "dec")) {
+        value = base64_decode(buf, (size_t)len, &olen);
+    } else {
+        value = base64_encode(buf, (size_t)len, &olen);
+    }
     if(NULL == value) {
         return -1;
     }
