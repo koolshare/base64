@@ -41,6 +41,9 @@ int main(int argc, char *argv[]) {
         }
         value[olen] = '\0';
     } else {
+        if('\n' == buf[len-1]) {
+            --len;
+        }
         buf[len] = '\0';
         value = base64_encode(buf, (size_t)len, &olen);
         if(NULL == value) {
